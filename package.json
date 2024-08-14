@@ -1,25 +1,26 @@
 {
-    "name": "pt-email-service",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "dev": "node src/server.ts",
-        "format:check": "prettier . --check",
-        "format:fix": "prettier . --write",
-        "lint:check": "eslint .",
-        "lint:fix": "eslint . --fix",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Venkateswarlu K <venki.apiiit@gmail.com>",
-    "license": "ISC",
-    "devDependencies": {
-        "@types/node": "^22.2.0",
-        "@typescript-eslint/eslint-plugin": "^8.1.0",
-        "@typescript-eslint/parser": "^8.1.0",
-        "eslint": "^9.9.0",
-        "eslint-config-prettier": "^9.1.0",
-        "prettier": "^3.3.3",
-        "typescript": "^5.5.4"
-    }
+  "name": "pt-email-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node src/server.ts",
+    "format:check": "prettier . --check",
+    "format:fix": "prettier . --write",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "author": "Venkateswarlu K <venki.apiiit@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.1.0",
+    "@typescript-eslint/parser": "^8.1.0",
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  }
 }
