@@ -1,1 +1,2 @@
-npx eslint . --config eslint.config.js
+
+npx lint-staged
