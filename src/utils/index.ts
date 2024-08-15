@@ -1,7 +1,15 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const { PORT, NODE_ENV, SMTP_SERVICE, SMTP_USER, SMTP_PASS } = process.env;
+const {
+    PORT,
+    NODE_ENV,
+    SMTP_SERVICE,
+    SMTP_USER,
+    SMTP_PASS,
+    REDIS_URL,
+    REDIS_PORT,
+} = process.env;
 
 export const Config = {
     PORT,
@@ -9,4 +17,6 @@ export const Config = {
     SMTP_SERVICE,
     SMTP_USER,
     SMTP_PASS,
+    REDIS_URL,
+    REDIS_PORT,
 };
