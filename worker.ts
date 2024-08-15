@@ -2,6 +2,7 @@ import queueManagerService from './src/services/queueManagerService.ts';
 import { Worker } from 'bullmq';
 import emailService from './src/services/emailService.ts';
 import { logger } from './src/utils/logger.ts';
+import fs from 'fs';
 
 const emailQueue = queueManagerService.emailQueue;
 
@@ -10,11 +11,11 @@ const worker = new Worker(
     'email-queue',
     async (job) => {
         const { to, subject, text } = job.data;
-        logger.debug(job.data);
-        let attempts = 0;
-        if (job.data.attempts) {
-            attempts = job.data.attempts;
-        }
+        logger.debug(job.opts.attempts);
+        let attempts = job.opts.attempts || 0;
+        // if (job.data.attempts) {
+        //     attempts = job.data.attempts;
+        // }
         try {
             await emailService.sendEmail(to, subject, text);
             if (job.id) {
@@ -29,9 +30,9 @@ const worker = new Worker(
             logger.error('Error sending email:', err);
             logger.info('Job data:' + JSON.stringify(job.data));
 
-            if (job.data.attempts < 3 || attempts) {
+            if (attempts < 3) {
                 attempts++;
-                job.data.attempts++;
+                // job.data.attempts++;
                 await queueManagerService.emailQueue.add(
                     'email-queue',
                     { to, subject, text },
@@ -45,6 +46,7 @@ const worker = new Worker(
                 );
             } else {
                 logger.warn('Maximum retry attempts reached for job:', job.id);
+                fs.writeFileSync('email-failed.log', JSON.stringify(job));
                 if (job.id) {
                     await queueManagerService.emailQueue.remove(job.id);
                 }
