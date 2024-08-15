@@ -48,6 +48,10 @@ class EmailController {
                         type: 'exponential',
                         delay: 1000,
                     },
+                    removeOnComplete: {
+                        age: 100,
+                        count: 10,
+                    },
                 },
             );
             res.status(202).json({
@@ -82,8 +86,11 @@ class EmailController {
             }
 
             const state = await job.getState();
+            const attempts = job.attemptsMade;
+            const result = job.returnvalue;
+            const error = job.failedReason;
             res.status(200).json({
-                DATA: { state },
+                DATA: { state, attempts, result, error },
                 MESSAGE: 'Email status fetched successfully',
                 STATUS: 200,
             });

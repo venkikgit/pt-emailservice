@@ -10,14 +10,16 @@ const worker = new Worker(
     'email-queue',
     async (job) => {
         const { to, subject, text } = job.data;
-        logger.info(job.data);
-        let attempts = job.data.attempts || 0;
+        logger.debug(job.data);
+        let attempts = 0;
+        if (job.data.attempts) {
+            attempts = job.data.attempts;
+        }
         try {
             await emailService.sendEmail(to, subject, text);
             if (job.id) {
                 await queueManagerService.emailQueue.remove(job.id);
             }
-            // await job.remove();
             // throw new Error('Email send failed');
 
             logger.info(
@@ -25,10 +27,11 @@ const worker = new Worker(
             );
         } catch (err: Error | unknown) {
             logger.error('Error sending email:', err);
-            logger.error('Job data:', job.data);
+            logger.info('Job data:' + JSON.stringify(job.data));
 
-            if (attempts < 3) {
+            if (job.data.attempts < 3 || attempts) {
                 attempts++;
+                job.data.attempts++;
                 await queueManagerService.emailQueue.add(
                     'email-queue',
                     { to, subject, text },
@@ -53,14 +56,5 @@ const worker = new Worker(
         removeOnComplete: { age: 100, count: 1 },
     },
 );
-// worker.on('completed', (job) => {
-//     logger.info('Email sent successfully:' + job.id);
-//     // You can access the number of attempts from job.data.attempts
-// });
-
-// worker.on('failed', (job, err) => {
-//     logger.error('Email failed to send:' + err + job.data);
-//     // You can access the number of attempts from job.data.attempts
-// });
 
 logger.info('Email worker is running');
