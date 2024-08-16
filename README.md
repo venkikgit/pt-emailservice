@@ -4,9 +4,9 @@ This project is a Node.js application that includes a server, worker, and Hello 
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Environment Variables](#environment-variables)
-- [Running the Application](#running-the-application)
+-   [Installation](#installation)
+-   [Environment Variables](#environment-variables)
+-   [Running the Application](#running-the-application)
 
 ## Installation
 
@@ -30,16 +30,16 @@ This project is a Node.js application that includes a server, worker, and Hello 
 
 The application requires the following environment variables:
 
-- `PORT`: The port on which the server will run.
-- `NODE_ENV`: The environment in which the application is running (e.g., `development`, `production`).
-- `SMTP_SERVICE`: The SMTP service used for sending emails.
-- `SMTP_USER`: The SMTP user for authentication.
-- `SMTP_PASS`: The SMTP password for authentication.
-- `REDIS_URL`: The URL for the Redis server.
-- `REDIS_PORT`: The port for the Redis server.
-- `aws_access_key_id`: AWS access key ID for SES.
-- `aws_secret_access_key`: AWS secret access key for SES.
-- `aws_ses_sender_email`: The sender email address for AWS SES.
+-   `PORT`: The port on which the server will run.
+-   `NODE_ENV`: The environment in which the application is running (e.g., `development`, `production`).
+-   `SMTP_SERVICE`: The SMTP service used for sending emails.
+-   `SMTP_USER`: The SMTP user for authentication.
+-   `SMTP_PASS`: The SMTP password for authentication.
+-   `REDIS_URL`: The URL for the Redis server.
+-   `REDIS_PORT`: The port for the Redis server.
+-   `aws_access_key_id`: AWS access key ID for SES.
+-   `aws_secret_access_key`: AWS secret access key for SES.
+-   `aws_ses_sender_email`: The sender email address for AWS SES.
 
 Example `.env` file:
 
@@ -55,9 +55,10 @@ aws_access_key_id=your-aws-access-key-id
 aws_secret_access_key=your-aws-secret-access-key
 aws_ses_sender_email=your-sender-email@example.com
 
+```
+
 ## Running the Application
 
 npx nodemon --exec tsx src/server.ts
 npx nodemon --exec tsx worker.ts
 npx nodemon --exec tsx helloWorld.ts
-
