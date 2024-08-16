@@ -17,14 +17,14 @@ const worker = new Worker(
         //     attempts = job.data.attempts;
         // }
         try {
-            await emailService.sendEmail(to, subject, text);
+            await emailService.sendEmailWithNodeMailer(to, subject, text);
             if (job.id) {
                 await queueManagerService.emailQueue.remove(job.id);
             }
             // throw new Error('Email send failed');
-
+            fs.writeFileSync('email-success.log', JSON.stringify(job));
             logger.info(
-                `Email sent to ${to} with subject "${subject}" with ${job.id}`,
+                `Email sent to ${to} with subject "${subject}" with ${job.id} using primary email service`,
             );
         } catch (err: Error | unknown) {
             logger.error('Error sending email:', err);
@@ -45,10 +45,28 @@ const worker = new Worker(
                     },
                 );
             } else {
-                logger.warn('Maximum retry attempts reached for job:', job.id);
-                fs.writeFileSync('email-failed.log', JSON.stringify(job));
-                if (job.id) {
-                    await queueManagerService.emailQueue.remove(job.id);
+                logger.warn(
+                    'Maximum retry attempts reached for job . Trying one more time using Secondary Email Service:',
+                    job.id,
+                );
+
+                try {
+                    await emailService.sendEmailWithSES(to, subject, text);
+                    if (job.id) {
+                        await queueManagerService.emailQueue.remove(job.id);
+                    }
+                    logger.info(
+                        `Email sent to ${to} with subject "${subject}" with ${job.id} using secondary email service`,
+                    );
+                } catch (error) {
+                    logger.error(
+                        'Error Occured with Senodary Email Service Also' +
+                            error,
+                    );
+                    fs.writeFileSync('email-failed.log', JSON.stringify(job));
+                    if (job.id) {
+                        await queueManagerService.emailQueue.remove(job.id);
+                    }
                 }
             }
         }

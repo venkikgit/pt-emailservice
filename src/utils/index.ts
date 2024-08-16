@@ -9,6 +9,9 @@ const {
     SMTP_PASS,
     REDIS_URL,
     REDIS_PORT,
+    aws_access_key_id,
+    aws_secret_access_key,
+    aws_ses_sender_email,
 } = process.env;
 
 export const Config = {
@@ -19,4 +22,7 @@ export const Config = {
     SMTP_PASS,
     REDIS_URL,
     REDIS_PORT,
+    aws_access_key_id,
+    aws_secret_access_key,
+    aws_ses_sender_email,
 };

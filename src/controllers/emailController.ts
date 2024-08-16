@@ -14,7 +14,7 @@ class EmailController {
                 });
                 return;
             }
-            await emailService.sendEmail(
+            await emailService.sendEmailWithNodeMailer(
                 req.body.to,
                 req.body.subject,
                 req.body.text,
