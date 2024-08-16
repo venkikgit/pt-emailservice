@@ -9,12 +9,9 @@ const rl = readline.createInterface({
 
 function promptInput(inputName) {
     return new Promise((resolve) => {
-        rl.question(
-            `Enter the ${inputName} to send a welcome message: `,
-            (item) => {
-                resolve(item);
-            },
-        );
+        rl.question(`Enter the ${inputName} to send a message: `, (item) => {
+            resolve(item);
+        });
     });
 }
 async function sendEmailWithQueue(email, subject, text) {
