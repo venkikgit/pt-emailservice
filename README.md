@@ -7,8 +7,6 @@ This project is a Node.js application that includes a server, worker, and Hello 
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
 - [Running the Application](#running-the-application)
-- [Scripts](#scripts)
-- [License](#license)
 
 ## Installation
 
