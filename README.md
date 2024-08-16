@@ -59,6 +59,9 @@ aws_ses_sender_email=your-sender-email@example.com
 
 ## Running the Application
 
+```
 npx nodemon --exec tsx src/server.ts
 npx nodemon --exec tsx worker.ts
 npx nodemon --exec tsx helloWorld.ts
+
+```
